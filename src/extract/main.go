@@ -23,7 +23,7 @@ var phone_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebK
 func main() {
 	beego.BConfig.Listen.HTTPAddr = ""   // 监听所有网卡
 	beego.BConfig.EnableGzip = true      // 启用Gzip压缩
-	beego.BConfig.Listen.HTTPPort = 6968 // 监听端口9868
+	beego.BConfig.Listen.HTTPPort = 9868 // 监听端口9868
 
 	beego.BConfig.RunMode = "dev" // 开发模式
 
@@ -53,12 +53,11 @@ func (this *analysisController) Get() {
 		this.Data["json"] = zuiYou(url)
 	} else if strings.Index(url, "huoshan.com") != -1 {
 		this.Data["json"] = huoShan(url)
+	} else if strings.Index(url, "kuaishou.com") != -1 || strings.Index(url, "gifshow.com") != -1 {
+		//this.Data["json"] = kuaiShou(url)
 	} else {
 		this.Data["json"] = Echo(400, "暂不支持该平台", nil)
 	}
-	/*else if strings.Index(url, "kuaishou.com") != -1 || strings.Index(url, "gifshow.com") != -1 {
-		this.Data["json"] = kuaiShou(url)
-	}*/
 	this.ServeJSON()
 }
 

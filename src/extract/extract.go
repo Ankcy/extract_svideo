@@ -180,7 +180,12 @@ func weiShi(url string) map[string]interface{} {
 	echoMap := make(map[string]interface{})
 	echoMap["text"] = respJson.Get("data.feeds.0.feed_desc").String()
 	echoMap["cover"] = respJson.Get("data.feeds.0.images.0.url").String()
-	echoMap["playAddr"] = respJson.Get("data.feeds.0.video_url").String()
+	content := respJson.Get("data.feeds.0.video_url").String();
+	//content = strings.Replace(content, "<", "\\u003c", -1)
+        //content = strings.Replace(content, ">", "\\u003e", -1)
+        //content = strings.Replace(content, "&", "\\u0026", -1)
+	echoMap["playAddr"] = content
+	//fmt.Println(content)
 	return Echo(200, "", echoMap)
 }
 
@@ -191,10 +196,10 @@ func douYin(url string) map[string]interface{} {
 	if len(aweme_id) < 1 || len(aweme_id[0]) < 2 {
 		return Echo(400, "参数错误", nil)
 	}
-
-	resp = HttpGet("https://api-hl.amemv.com/aweme/v1/aweme/detail/?aid=1128&app_name=aweme&version_code=251&aweme_id="+aweme_id[0][1], phone_ua)
+	fmt.Println(aweme_id[0][1])
+	resp = HttpGet("https://api-hl.amemv.com/aweme/v1/aweme/detail/?aid=1128&app_name=aweme&version_code=251&aweme_id="+aweme_id[0][1], pc_ua)
+	fmt.Println(resp)
 	respJson := gjson.Parse(resp)
-	return Echo(400, respJson.String(), nil)
 	playAddr := respJson.Get("aweme_detail.video.play_addr.url_list.0").String()
 	if playAddr == "" {
 		return Echo(400, "解析错误", nil)
