@@ -19,8 +19,6 @@ import (
 )
 
 /**
- * Author: Filmy
- * Group: Mlooc
  * Date: 2019/8/1
  * Time: 21:30
  * Ver: 1.1
@@ -196,9 +194,9 @@ func douYin(url string) map[string]interface{} {
 	if len(aweme_id) < 1 || len(aweme_id[0]) < 2 {
 		return Echo(400, "参数错误", nil)
 	}
-	fmt.Println(aweme_id[0][1])
+	//fmt.Println(aweme_id[0][1])
 	resp = HttpGet("https://api-hl.amemv.com/aweme/v1/aweme/detail/?aid=1128&app_name=aweme&version_code=251&aweme_id="+aweme_id[0][1], pc_ua)
-	fmt.Println(resp)
+	//fmt.Println(resp)
 	respJson := gjson.Parse(resp)
 	playAddr := respJson.Get("aweme_detail.video.play_addr.url_list.0").String()
 	if playAddr == "" {
